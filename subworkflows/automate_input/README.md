@@ -2,8 +2,8 @@
 
 ## Scripts
 
-- `bin/tol_input.sh`: Takes ToL ID and project name as input. Creates the samplesheet with aligned CRAM files, links to the unmasked genome file and its `fai` index. Imp
-- `bin/samplesheet_check.py`: Takes the samplesheet created by `input_tol`. Validates and updates the samplesheet csv.
+- `bin/tol_input.sh`: Takes ToL ID and project name as input. Creates the samplesheet with aligned CRAM files, links to the unmasked genome file and its `fai` index.
+- `bin/samplesheet_check.py`: Takes the samplesheet created by `input_tol` or provided by user. Validates and updates the samplesheet csv.
 
 ## Modules
 
@@ -21,4 +21,24 @@ Passes inputs, either genome fasta and samplesheet csv or Tree of Life organism 
 
 ## Integration
 
-
+Currently to integrate this subworkflow into an nf-core pipeline,
+- Disable input parameter validation in `workflows/pipeline.nf`
+```
+WorkflowVariantcalling.initialise(params, log)
+```
+- Disable checks to confirm input path parameters exist in `workflows/pipeline.nf`
+```
+def checkPathParamList = [ params.input, params.multiqc_config, params.fasta ]
+for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
+```
+- Modify required parameters in `nextflow_schema.json`
+```
+            "required": ["outdir"],
+```
+- Disable input check in `lib/WorkflowMain.groovy`
+```
+        if (!params.input) {
+            log.error "Please provide an input samplesheet to the pipeline e.g. '--input samplesheet.csv'"
+            System.exit(1)
+        }
+```
