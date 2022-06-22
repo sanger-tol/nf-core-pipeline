@@ -22,23 +22,30 @@ Passes inputs, either genome fasta and samplesheet csv or Tree of Life organism 
 ## Integration
 
 Currently to integrate this subworkflow into an nf-core pipeline,
-- Disable input parameter validation in `workflows/pipeline.nf`
+- Remove path check for input parameter in `workflows/pipeline.nf`
 ```
-WorkflowVariantcalling.initialise(params, log)
+def checkPathParamList = [ params.multiqc_config, params.fasta ]
 ```
-- Disable checks to confirm input path parameters exist in `workflows/pipeline.nf`
+- Modify `input` details in `nextflow_schema.json`
 ```
-def checkPathParamList = [ params.input, params.multiqc_config, params.fasta ]
-for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
+                "input": {
+                    "type": "string",
+                    "description": "Path to comma-separated file containing information about the samples in the experiment.",
+                    "format": "file-path",
+                    "help_text": "Provide a Tree of Life organism ID. Otherwise, you will need to create a design file with information about the samples in your experiment bef
+ore running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/va
+riantcalling/usage#samplesheet-input).",
+                    "fa_icon": "fas fa-file-csv"
+                },
 ```
-- Modify required parameters in `nextflow_schema.json`
+- Disable fasta check in `lib/WorkflowVariantcalling.groovy`
 ```
-            "required": ["outdir"],
+        //if (!params.fasta) {
+        //    log.error "Genome fasta file not specified with e.g. '--fasta genome.fa' or via a detectable config file."
+        //    System.exit(1)
+        //}
 ```
-- Disable input check in `lib/WorkflowMain.groovy`
+– Update log error for input check in `lib/WorkflowMain.groovy`
 ```
-        if (!params.input) {
-            log.error "Please provide an input samplesheet to the pipeline e.g. '--input samplesheet.csv'"
-            System.exit(1)
-        }
+            log.error "Please provide an input samplesheet to the pipeline e.g. '--input samplesheet.csv' or organism ID '--input tolid'"
 ```
