@@ -3,8 +3,8 @@
 nextflow.enable.dsl = 2
 
 // Check mandatory parameters
-if (params.input && params.fasta) { inputs = [ file(params.input), file(params.fasta) ] }
-else if (params.id && params.project) { inputs = [ params.id, params.project ] }
+if (params.input && params.fasta) { inputs = [ file(params.input, checkIfExists: true), file(params.fasta) ] }
+else if (params.input && params.project) { inputs = [ params.input, params.project ] }
 else { exit 1, 'Input not specified. Please include either a samplesheet or Tree of Life organism and project IDs' }
 
 // 
