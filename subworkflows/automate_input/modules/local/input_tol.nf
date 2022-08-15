@@ -18,7 +18,7 @@ process INPUT_TOL {
     task.ext.when == null || task.ext.when
 
     script:
-    def proj = project ? "${project}" : ""
+    def proj = project ?: ""
     """
     tol_input.sh $tolid ${proj}
 
