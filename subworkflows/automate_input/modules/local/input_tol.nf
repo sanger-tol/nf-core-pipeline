@@ -20,7 +20,7 @@ process INPUT_TOL {
     script:
     def proj = project ?: ""
     """
-    tol_input.sh $tolid ${proj}
+    tol_input.sh "$tolid" "$proj"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
