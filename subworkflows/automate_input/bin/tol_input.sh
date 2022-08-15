@@ -4,9 +4,9 @@ PROJECT_BASEDIR=/lustre/scratch124/tol/projects
 
 if [ $# -ne 2 ]; then echo -e "Please provide a ToL ID and a project. \nUsage: ./automate_io <tol_id> <tol_project>. \n<tol_id> must match the expected genome."; exit 1; fi
 
-id=$1
-project=$2
-data=$PROJECT_BASEDIR/$project/data
+id="$1"
+project="$2"
+data="$PROJECT_BASEDIR/$project/data"
 
 if [[ ! -d "$data" ]]
 then
