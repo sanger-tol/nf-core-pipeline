@@ -31,5 +31,5 @@ else echo "No cram files."; exit 1; fi
 
 if compgen -G $analysis/assembly/indices/${gca}.unmasked.fasta > /dev/null
     then cp $analysis/assembly/indices/${gca}.unmasked.fasta ./
-else "Unmasked fasta does not exist."; exit 1; fi
+else echo "Unmasked fasta does not exist."; exit 1; fi
 
