@@ -1,16 +1,24 @@
 #!/bin/bash
 
+PROJECT_BASEDIR=/lustre/scratch124/tol/projects
+
 if [ $# -ne 2 ]; then echo -e "Please provide a ToL ID and a project. \nUsage: ./automate_io <tol_id> <tol_project>. \n<tol_id> must match the expected genome."; exit 1; fi
 
 id=$1
 project=$2
-data=/lustre/scratch124/tol/projects/$project/data
+data=$PROJECT_BASEDIR/$project/data
+
+if [[ ! -d "$data" ]]
+then
+    echo "Project "$project" cannot be found under $PROJECT_BASEDIR"
+    exit 1
+fi
 
 if compgen -G $data/*/*/assembly/release/${id}.[0-9]/insdc/GCA*fasta.gz > /dev/null
     then genome=$(ls $data/*/*/assembly/release/${id}.[0-9]/insdc/GCA*fasta.gz | tail -1)
 elif compgen -G $data/*/*/assembly/release/${id}.[0-9]_{p,m}aternal_haplotype/insdc/GCA*fasta.gz > /dev/null
     then genome=$(ls $data/*/*/assembly/release/${id}.[0-9]_*aternal_haplotype/insdc/GCA*fasta.gz | tail -1)
-else echo "Genome for $id not found"; exit 1; fi
+else echo "Genome for $id not found in $data"; exit 1; fi
 
 taxon=$(echo $genome | cut -f8 -d'/')
 organism=$(echo $genome | cut -f9 -d'/')
