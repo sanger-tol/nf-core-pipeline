@@ -2,7 +2,7 @@
 
 PROJECT_BASEDIR=/lustre/scratch124/tol/projects
 
-if [ $# -ne 2 ]; then echo -e "Please provide a ToL ID and a project. \nUsage: ./automate_io <tol_id> <tol_project>. \n<tol_id> must match the expected genome."; exit 1; fi
+if [ $# -ne 2 ]; then echo -e "Script to create a samplesheet for a species.\nUsage: $0 <tol_id> <tol_project>.\nVersion: 1.0"; exit 1; fi
 
 id="$1"
 project="$2"

@@ -24,7 +24,7 @@ process INPUT_TOL {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        GNU Awk: \$(echo \$(awk --version 2>&1) | grep -i awk | sed 's/GNU Awk //; s/,.*//')
+        tol_input.sh: \$(tol_input.sh | tail -n 1 | cut -d' ' -f2)
     END_VERSIONS
     """
 }
