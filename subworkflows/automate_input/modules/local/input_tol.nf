@@ -1,5 +1,5 @@
 process INPUT_TOL {
-    label 'process_nompi'
+    label 'process_single'
 
     conda (params.enable_conda ? "conda-forge::gawk=5.1.0" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -18,13 +18,13 @@ process INPUT_TOL {
     task.ext.when == null || task.ext.when
 
     script:
-    def proj = project ? "${project}" : ""
+    def proj = project ?: ""
     """
-    tol_input.sh $tolid ${proj}
+    tol_input.sh "$tolid" "$proj"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        GNU Awk: \$(echo \$(awk --version 2>&1) | grep -i awk | sed 's/GNU Awk //; s/,.*//')
+        tol_input.sh: \$(tol_input.sh | tail -n 1 | cut -d' ' -f2)
     END_VERSIONS
     """
 }
