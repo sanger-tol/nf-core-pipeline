@@ -19,9 +19,8 @@ process INPUT_TOL {
     task.ext.when == null || task.ext.when
 
     script:
-    def proj = project ?: ""
     """
-    tol_input.sh "$tolid" "$proj"
+    tol_input.sh "$tolid" "$project"
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
