@@ -10,8 +10,9 @@ import argparse
 
 def parse_args(args=None):
     Description = "Reformat nf-core/readmapping samplesheet file and check its contents."
+    Epilog = "Example usage: python check_samplesheet.py <FILE_IN> <FILE_OUT>"
 
-    parser = argparse.ArgumentParser(description=Description)
+    parser = argparse.ArgumentParser(description=Description, epilog=Epilog)
     parser.add_argument("FILE_IN", help="Input samplesheet file.")
     parser.add_argument("FILE_OUT", help="Output file.")
     parser.add_argument('--version', action='version', version='%(prog)s 1.0')
