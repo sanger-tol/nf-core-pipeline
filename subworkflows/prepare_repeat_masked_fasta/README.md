@@ -14,12 +14,11 @@
 
 - `tabix/bgzip`: compress to bgzip;
 - `tabix/tabix`: index the BED file with tabix (as CSI and TBI);
-- `custom/getchromsizes`: faidx, sizes, and gzi indices;
-- `samtools/dict`: dictionary of sequence checksums.
 
 ## Subworkflows
 
-- `prepare_repeat_masked_fasta`: Chain the modules to extract the BED file and generate all indices.
+- `prepare_fasta`: Auxiliary subworkflow to compress and generate the indices for a Fasta file. See its own [../prepare\_fasta/README.md](description).
+- `prepare_repeat_masked_fasta`: Chain the modules to extract the BED file and generate its indices, and defer to `prepare_fasta` for the Fasta-related work.
 
 ## Execution `main.nf`
 
@@ -29,7 +28,8 @@ Simply call the `prepare_repeat_masked_fasta` subworkflow on a Fasta file.
 
 Currently to integrate this subworkflow into an nf-core pipeline:
 
-- Install all four nf-core modules
+- Install the `prepare_fasta` subworkflow as per its [../prepare\_fasta/README.md#Integration](integration guide).
+- Install the `tabix/tabix` nf-core module
 - Copy the script, the local module, and the subworkflow file in
 - Add in `conf/modules.config` the highlighted section from `nextflow.config`
 - Connect `PREPARE_REPEAT_MASKED_FASTA` to a channel of Fasta files
