@@ -6,12 +6,12 @@ nextflow.enable.dsl = 2
 if (!params.fasta) { exit 1, '--fasta not specified.' }
 
 // Imports
-include { PREPARE_REPEAT_MASKED_FASTA } from './subworkflows/local/prepare_repeat_masked_fasta'
+include { PREPARE_REPEATS } from './subworkflows/local/prepare_repeats'
 
 workflow {
     file_fasta = file(params.fasta, checkIfExists: true)
     ch_input = Channel.of(
         [[id: file_fasta.baseName], file_fasta]
     )
-    PREPARE_REPEAT_MASKED_FASTA ( ch_input )
+    PREPARE_REPEATS ( ch_input )
 }

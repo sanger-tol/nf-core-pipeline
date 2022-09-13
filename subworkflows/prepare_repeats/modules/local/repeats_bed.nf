@@ -1,6 +1,6 @@
 // Module that parses a repeat-masked genome (as Fasta) and extracts
 // the coordinates of the masked regions as a BED File
-process MASKING_TO_BED {
+process REPEATS_BED {
     tag "$genome"
     label 'process_single'
 
@@ -22,11 +22,11 @@ process MASKING_TO_BED {
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    masking_to_bed.py $genome > ${prefix}.bed
+    repeats_bed.py $genome > ${prefix}.bed
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        masking_to_bed.py: \$(masking_to_bed.py --version | cut -d' ' -f2)
+        repeats_bed.py: \$(repeats_bed.py --version | cut -d' ' -f2)
     END_VERSIONS
     """
 }
