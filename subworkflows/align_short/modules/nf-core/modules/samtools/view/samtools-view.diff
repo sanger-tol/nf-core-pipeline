@@ -1,0 +1,17 @@
+Changes in module 'nf-core/modules/samtools/view'
+--- modules/nf-core/modules/samtools/view/main.nf
++++ modules/nf-core/modules/samtools/view/main.nf
+@@ -25,7 +25,10 @@
+     def args2 = task.ext.args2 ?: ''
+     def prefix = task.ext.prefix ?: "${meta.id}"
+     def reference = fasta ? "--reference ${fasta} -C" : ""
+-    def file_type = input.getExtension()
++    def file_type = args.contains("--output-fmt sam") ? "sam" :
++                    args.contains("--output-fmt bam") ? "bam" :
++                    args.contains("--output-fmt cram") ? "cram" :
++                    input.getExtension()
+     if ("$input" == "${prefix}.${file_type}") error "Input and output names are the same, use \"task.ext.prefix\" to disambiguate!"
+     """
+     samtools \\
+
+************************************************************
