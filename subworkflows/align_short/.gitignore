@@ -1,5 +1,0 @@
-assets
-modules/nf-core/modules/*/*/main.nf
-modules/nf-core/modules/*/*/meta.yml
-modules.json
-.nf-core.yml

@@ -1,0 +1,7 @@
+subworkflows/*/assets
+subworkflows/*/modules/nf-core/modules/*/*/main.nf
+subworkflows/*/modules/nf-core/modules/*/*/meta.yml
+subworkflows/*/modules.json
+subworkflows/*/.nf-core.yml
+subworkflows/*/work
+subworkflows/*/results
