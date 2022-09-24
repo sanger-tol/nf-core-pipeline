@@ -5,3 +5,4 @@ subworkflows/*/modules.json
 subworkflows/*/.nf-core.yml
 subworkflows/*/work
 subworkflows/*/results
+subworkflows/*/.nextflow*
