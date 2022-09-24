@@ -35,6 +35,7 @@ _None_
 ## Execution `main.nf`
 
 Call the `align_short` subworkflow using:
+
 1. reads: `[ [id, datatype, read_group], read_file ]`
 2. index: `/path/to/bwamem2_index/`
 3. genome: `/path/to/genome.fasta`
