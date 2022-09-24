@@ -25,9 +25,7 @@ workflow CONVERT_STATS {
     ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions.first())
 
     // Combine CRAM and CRAI into one channel
-    SAMTOOLS_VIEW.out.cram
-    .join(SAMTOOLS_INDEX.out.crai, by: [0], remainder: true)
-    .set { ch_cram_crai }
+    ch_cram_crai = SAMTOOLS_VIEW.out.cram.join(SAMTOOLS_INDEX.out.crai)
 
     // Calculate statistics
     SAMTOOLS_STATS ( ch_cram_crai, fasta )
