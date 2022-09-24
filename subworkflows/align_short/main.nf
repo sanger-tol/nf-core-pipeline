@@ -18,5 +18,5 @@ workflow {
     ch_index = BWAMEM2_INDEX ( ch_genome ).index
 
     // Align short read data - Illumina or HiC, markduplicate and calculate relevant statistics 
-    ALIGN_SHORT ( ch_reads, ch_index, ch_fasta )
+    ALIGN_SHORT ( ch_fasta, ch_index, ch_reads )
 }
