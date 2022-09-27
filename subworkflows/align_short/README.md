@@ -45,7 +45,10 @@ Call the `align_short` subworkflow using:
 Currently to integrate this subworkflow into an nf-core pipeline (see `main.nf` for an example):
 
 - Install all nf-core modules
-- Patch `samtools/merge` and `samtools/view` as described in respective `diff` files
+- Patch `samtools/merge`:
+   - Go to `modules/nf-core/modules/samtools/merge`.
+   - Add `samtools-merge.diff` from this repository.
+   - Run `patch < samtools-merge.diff`. This will update `main.nf` as required by this subworkflow.
 - Copy the subworkflows
 - Add in `conf/modules.config` the highlighted section from `nextflow.config`
 - Connect `ALIGN_SHORT` to the read, genome index and genome channels
