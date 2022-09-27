@@ -23,7 +23,7 @@ _None_
 - `samtools/merge` (patched): merge BAM or CRAM file;
 - `samtools/sort`: sort SAM/BAM/CRAM file;
 - `samtools/stats`: produces comprehensive statistics from SAM/BAM/CRAM file;
-- `samtools/view` (patched): filter/convert SAM/BAM/CRAM file.
+- `samtools/view`: filter/convert SAM/BAM/CRAM file.
 
 ## Subworkflows
 
