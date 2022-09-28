@@ -27,6 +27,9 @@ _None_
 
 ## Subworkflows
 
+Although the short-read alignment functionality could easily be shipped as a single subworkflow, the example here breaks it down into multiple subworkflows.
+This is to maximise the reusability of its components, especially in the light of our [read-mapping pipeline](https://github.com/sanger-tol/readmapping).
+
 - `align_short`: align short read (HiC and Illumina) data against the genome;
 - `markdup_stats`: sorts aligned file, and executes markduplicate and statistics subworkflows;
 - `markduplicate`: merge and markdup aligned reads;
