@@ -27,21 +27,20 @@ _None_
 
 ## Subworkflows
 
-Although the short-read alignment functionality could easily be shipped as a single subworkflow, the example here breaks it down into multiple subworkflows.
-This is to maximise the reusability of its components, especially in the light of our [read-mapping pipeline](https://github.com/sanger-tol/readmapping).
+Although the short-read alignment functionality could easily be shipped as a single subworkflow, the example here breaks it down into multiple subworkflows. This is to maximise modularity and the reusability of its components, especially in the light of our [read-mapping pipeline](https://github.com/sanger-tol/readmapping). 
 
-- `align_short`: align short read (HiC and Illumina) data against the genome;
-- `markdup_stats`: sorts aligned file, and executes markduplicate and statistics subworkflows;
-- `markduplicate`: merge and markdup aligned reads;
-- `convert_stats`: convert to CRAM and calculate statistics.
+1. `align_short`: align short read (HiC and Illumina) data against the genome;
+2. `markdup_stats`: sorts aligned file, and executes markduplicate and statistics subworkflows;
+3. `markduplicate`: merge and markdup aligned reads;
+4. `convert_stats`: convert to CRAM and calculate statistics.
 
 ## Execution `main.nf`
 
 Call the `align_short` subworkflow using:
 
-1. reads: `[ [id, datatype, read_group], read_file ]`
+1. genome: `/path/to/genome.fasta`
 2. index: `/path/to/bwamem2_index/`
-3. genome: `/path/to/genome.fasta`
+3. reads: `[ [id, datatype, read_group], read_file ]`
 
 ## Integration
 
@@ -50,7 +49,7 @@ Currently to integrate this subworkflow into an nf-core pipeline (see `main.nf` 
 1. Install all nf-core modules
 2. Copy the subworkflows
 3. Add in `conf/modules.config` the highlighted section from `nextflow.config`
-4. Connect `ALIGN_SHORT` to the read, genome index and genome channels
+4. Connect `ALIGN_SHORT` to the genome fasta, genome index and read channels
 
 For the subworkflow to work as-is, the `meta.id` of the reads MUST be written as the sample identifier followed by an underscore and a unique read identifier that does NOT contain an underscore. For instance, `mMelMel3_T1` and `mMelMel3_T2` comply, but `mMelMel3_1_a` and `mMelMel3_2_a` don't.
 If that's not the case, edit the `map` before the `groupTuple` in `subworkflows/local/markdup_stats.nf` accordingly.
