@@ -10,8 +10,8 @@ include { SAMTOOLS_IDXSTATS } from '../../modules/nf-core/modules/samtools/idxst
 
 workflow CONVERT_STATS {
     take:
-    bam
-    fasta
+    bam    // channel: [ val(meta), /path/to/bam, /path/to/bai]
+    fasta  // channel: /path/to/fasta
 
     main:
     ch_versions = Channel.empty()
