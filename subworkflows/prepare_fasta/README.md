@@ -30,5 +30,6 @@ Currently to integrate this subworkflow into an nf-core pipeline:
 
 - Install all three nf-core modules
 - Copy the subworkflow file in
+- Add in `conf/base.config` the highlighted section from `nextflow.config`
 - Add in `conf/modules.config` the highlighted section from `nextflow.config`
 - Connect `PREPARE_FASTA` to a channel of Fasta files
