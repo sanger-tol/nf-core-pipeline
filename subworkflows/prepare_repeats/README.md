@@ -29,5 +29,6 @@ Currently to integrate this subworkflow into an nf-core pipeline:
 
 - Install the two nf-core modules
 - Copy the script, the local module, and the subworkflow file in
+- Add in `conf/base.config` the highlighted section from `nextflow.config`
 - Add in `conf/modules.config` the highlighted section from `nextflow.config`
 - Connect `PREPARE_REPEATS` to a channel of Fasta files
