@@ -26,10 +26,17 @@ workflow PREPARE_REPEATS {
     ch_compressed_bed   = TABIX_BGZIP ( ch_bed ).output
     ch_versions         = ch_versions.mix(TABIX_BGZIP.out.versions)
 
-    // Index the BED file in two formats for maximum compatibility
-    ch_indexed_bed_csi  = TABIX_TABIX_CSI ( ch_compressed_bed ).csi
+    // Try indexing the BED file in two formats for maximum compatibility
+    // but each has its own limitations
+    tabix_selector      = ch_compressed_bed.branch { meta, bed ->
+        tbi_and_csi: meta.max_length < 2**29
+        only_csi:    meta.max_length < 2**32
+    }
+
+    // Do the indexing on the compatible Fasta files
+    ch_indexed_bed_csi  = TABIX_TABIX_CSI ( tabix_selector.tbi_and_csi.mix(tabix_selector.only_csi) ).csi
     ch_versions         = ch_versions.mix(TABIX_TABIX_CSI.out.versions)
-    ch_indexed_bed_tbi  = TABIX_TABIX_TBI ( ch_compressed_bed ).tbi
+    ch_indexed_bed_tbi  = TABIX_TABIX_TBI ( tabix_selector.tbi_and_csi ).tbi
     ch_versions         = ch_versions.mix(TABIX_TABIX_TBI.out.versions)
 
 
