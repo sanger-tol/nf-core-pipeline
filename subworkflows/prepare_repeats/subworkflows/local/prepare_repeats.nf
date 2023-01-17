@@ -31,7 +31,13 @@ workflow PREPARE_REPEATS {
     tabix_selector      = ch_compressed_bed.branch { meta, bed ->
         tbi_and_csi: meta.max_length < 2**29
         only_csi:    meta.max_length < 2**32
+        no_tabix:    true
     }
+
+    // Output channels to tell the downstream subworkflows which indexes are missing
+    // (therefore, only meta is available)
+    no_csi              = tabix_selector.no_tabix.map {it[0]}
+    no_tbi              = tabix_selector.only_csi.mix(tabix_selector.no_tabix).map {it[0]}
 
     // Do the indexing on the compatible Fasta files
     ch_indexed_bed_csi  = TABIX_TABIX_CSI ( tabix_selector.tbi_and_csi.mix(tabix_selector.only_csi) ).csi
@@ -44,5 +50,7 @@ workflow PREPARE_REPEATS {
     bed_gz   = ch_compressed_bed            // path: genome.bed.gz
     bed_csi  = ch_indexed_bed_csi           // path: genome.bed.gz.csi
     bed_tbi  = ch_indexed_bed_tbi           // path: genome.bed.gz.tbi
+    no_csi   = no_csi                       // (only meta)
+    no_tbi   = no_tbi                       // (only meta)
     versions = ch_versions.ifEmpty(null)    // channel: [ versions.yml ]
 }
