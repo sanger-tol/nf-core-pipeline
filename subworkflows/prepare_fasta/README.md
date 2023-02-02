@@ -1,5 +1,9 @@
 # Preparing a Fasta file for efficient access
 
+This sub-workflow compresses the Fasta file with bgzip,
+then prepares the faidx, sizes, and gzi indices, as
+well as the samtools dictionary.
+
 ## Scripts
 
 _None_
@@ -22,13 +26,16 @@ _None_
 
 ## Execution `main.nf`
 
-Simply call the `prepare_fasta` subworkflow on a Fasta file.
+Simply call the `prepare_fasta` sub-workflow on a Fasta file.
 
 ## Integration
 
-Currently to integrate this subworkflow into an nf-core pipeline:
+Currently to integrate this sub-workflow into an nf-core pipeline:
 
 - Install all three nf-core modules
-- Copy the subworkflow file in
-- Add in `conf/modules.config` the highlighted section from `nextflow.config`
+- Copy the sub-workflow file in
+- Add in `conf/base.config` the highlighted section from `nextflow.config`,
+  modifying the `withName` clause to macth your pipeline's namespace
+- Add in `conf/modules.config` the highlighted section from `nextflow.config`,
+  modifying the `withName` clause to macth your pipeline's namespace
 - Connect `PREPARE_FASTA` to a channel of Fasta files
